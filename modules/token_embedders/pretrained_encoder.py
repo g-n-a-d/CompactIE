@@ -68,8 +68,8 @@ class PretrainedEncoder(nn.Module):
             tensor: bert output for tokens
         """
 
-        if token_type_inputs is None:
-            token_type_inputs = torch.zeros_like(seq_inputs)
+        # if token_type_inputs is None:
+        token_type_inputs = torch.zeros_like(seq_inputs)
         mask_inputs = (seq_inputs != 0).long()
 
         outputs = self.pretrained_model(input_ids=seq_inputs,
