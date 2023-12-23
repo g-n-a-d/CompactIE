@@ -171,7 +171,7 @@ def train(cfg, dataset, model):
             scheduler.step()
             model.zero_grad()
 
-    state_dict = torch.load(open(cfg.best_model_path, "rb"), map_location=lambda storage, loc: storage)
+    state_dict = torch.load(open(cfg.constituent_model_path, "rb"), map_location=lambda storage, loc: storage)
     model.load_state_dict(state_dict)
     test(cfg, dataset, model)
 
