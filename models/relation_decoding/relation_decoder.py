@@ -33,10 +33,10 @@ class RelDecoder(nn.Module):
         self.max_span_length = cfg.max_span_length
         self.device = cfg.device
 
-        # if cfg.rel_embedding_model == 'bert':
-        self.embedding_model = BertEmbedModel(cfg, vocab, True)
-        # elif cfg.rel_embedding_model == 'pretrained':
-        #     self.embedding_model = PretrainedEmbedModel(cfg, vocab)
+        if cfg.rel_embedding_model == 'bert':
+            self.embedding_model = BertEmbedModel(cfg, vocab, True)
+        elif cfg.rel_embedding_model == 'pretrained':
+            self.embedding_model = PretrainedEmbedModel(cfg, vocab, True)
         self.encoder_output_size = self.embedding_model.get_hidden_size()
 
         self.layer_norm = BertLayerNorm(self.encoder_output_size * 2)
