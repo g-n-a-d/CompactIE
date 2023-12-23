@@ -137,7 +137,7 @@ def train(cfg, dataset, model):
                     early_stop_cnt = 0
                     best_f1 = dev_f1
                     logger.info("Save model...")
-                    torch.save(model.state_dict(), open(cfg.best_model_path, "wb"))
+                    torch.save(model.state_dict(), open(cfg.relation_model_path, "wb"))
                 elif last_epoch != epoch:
                     early_stop_cnt += 1
                     if early_stop_cnt > cfg.early_stop:
@@ -171,7 +171,7 @@ def train(cfg, dataset, model):
             scheduler.step()
             model.zero_grad()
 
-    state_dict = torch.load(open(cfg.best_model_path, "rb"), map_location=lambda storage, loc: storage)
+    state_dict = torch.load(open(cfg.relation_model_path, "rb"), map_location=lambda storage, loc: storage)
     model.load_state_dict(state_dict)
     test(cfg, dataset, model)
 
@@ -336,10 +336,10 @@ def main():
     # rel model
     model = RelDecoder(cfg=cfg, vocab=vocab, ent_rel_file=ent_rel_file)
 
-    if cfg.test and os.path.exists(cfg.best_model_path):
-        state_dict = torch.load(open(cfg.best_model_path, 'rb'), map_location=lambda storage, loc: storage)
+    if cfg.test and os.path.exists(cfg.relation_model_path):
+        state_dict = torch.load(open(cfg.relation_model_path, 'rb'), map_location=lambda storage, loc: storage)
         model.load_state_dict(state_dict)
-        logger.info("Loading best training model {} successfully for testing.".format(cfg.best_model_path))
+        logger.info("Loading best training model {} successfully for testing.".format(cfg.relation_model_path))
 
     if cfg.device > -1:
         model.cuda(device=cfg.device)
