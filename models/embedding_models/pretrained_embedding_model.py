@@ -17,6 +17,7 @@ class PretrainedEmbedModel(nn.Module):
         """
 
         super().__init__()
+        self.rel_mlp = rel_mlp
         self.activation = gelu
         self.pretrained_encoder = PretrainedEncoder(pretrained_model_name=cfg.pretrained_model_name,
                                                     trainable=cfg.fine_tune,
@@ -44,12 +45,12 @@ class PretrainedEmbedModel(nn.Module):
 
         batch_inputs['seq_encoder_reprs'] = batch_seq_tokens_encoder_repr
 
-        # if not self.rel_mlp:
-        #     batch_seq_tokens_encoder_repr = batched_index_select(batch_seq_pretrained_encoder_repr,
-        #                                                      batch_inputs['wordpiece_tokens_index'])
-        #     batch_inputs['seq_encoder_reprs'] = batch_seq_tokens_encoder_repr
-        # else:
-        #     batch_inputs['seq_encoder_reprs'] = batch_seq_pretrained_encoder_repr
+        if not self.rel_mlp:
+            batch_seq_tokens_encoder_repr = batched_index_select(batch_seq_pretrained_encoder_repr,
+                                                             batch_inputs['wordpiece_tokens_index'])
+            batch_inputs['seq_encoder_reprs'] = batch_seq_tokens_encoder_repr
+        else:
+            batch_inputs['seq_encoder_reprs'] = batch_seq_pretrained_encoder_repr
 
 
         batch_inputs['seq_cls_repr'] = batch_cls_repr
