@@ -5,7 +5,7 @@ import random
 import logging
 import torch
 import numpy as np
-from transformers import BertTokenizer
+from transformers import BertTokenizer, AutoTokenizer
 
 from models.joint_decoding.joint_decoder import EntRelJointDecoder
 from models.relation_decoding.relation_decoder import RelDecoder
@@ -142,7 +142,7 @@ def main():
         logger.info("Load bert tokenizer successfully.")
         pretrained_vocab['wordpiece'] = tokenizer.get_vocab()
     elif cfg.embedding_model == 'pretrained':
-        tokenizer = BertTokenizer.from_pretrained(cfg.pretrained_model_name)
+        tokenizer = AutoTokenizer.from_pretrained(cfg.pretrained_model_name)
         logger.info("Load {} tokenizer successfully.".format(cfg.pretrained_model_name))
         pretrained_vocab['wordpiece'] = tokenizer.get_vocab()
     oie_test_reader = OIE4ReaderForEntRelDecoding(cfg.test_file, False, max_len)
