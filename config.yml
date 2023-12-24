@@ -1,17 +1,18 @@
 save_dir: save_results/
-data_dir: data/evaluation_data/carb/
+data_dir: data/evaluation_data/BenchIE/
 
-test_file: carb_test.json
-conjunctions_file: data/evaluation_data/carb/carb_test_conjunctions.txt
+test_file: benchIE_test.json
+conjunctions_file: data/evaluation_data/BenchIE/benchIE_conjunctions.txt
 ent_rel_file: data/ent_rel_file.json
 rel_file: data/rel_file.json
 test: True
 max_sent_len: 512
 max_wordpiece_len: 512
 
-embedding_model: bert
-mlp_hidden_size: 150
-max_span_length: 10
+embedding_model: pretrained
+pretrained_model_name: roberta-base
+mlp_hidden_size: 128
+max_span_length: 15
 dropout: 0.4
 logit_dropout: 0.2
 bert_model_name: bert-base-uncased
