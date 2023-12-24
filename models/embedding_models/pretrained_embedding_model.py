@@ -40,10 +40,10 @@ class PretrainedEmbedModel(nn.Module):
             batch_seq_pretrained_encoder_repr, batch_cls_repr = self.pretrained_encoder(
                 batch_inputs['wordpiece_tokens'])
 
-        batch_seq_tokens_encoder_repr = batched_index_select(batch_seq_pretrained_encoder_repr,
-                                                             batch_inputs['wordpiece_tokens_index'])
+        # batch_seq_tokens_encoder_repr = batched_index_select(batch_seq_pretrained_encoder_repr,
+        #                                                      batch_inputs['wordpiece_tokens_index'])
 
-        batch_inputs['seq_encoder_reprs'] = batch_seq_tokens_encoder_repr
+        # batch_inputs['seq_encoder_reprs'] = batch_seq_tokens_encoder_repr
 
         if not self.rel_mlp:
             batch_seq_tokens_encoder_repr = batched_index_select(batch_seq_pretrained_encoder_repr,
